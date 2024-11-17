@@ -1,3 +1,45 @@
-[gd_scene format=3 uid="uid://kg8gdgxcrmqf"]
+[gd_scene load_steps=8 format=3 uid="uid://kg8gdgxcrmqf"]
+
+[ext_resource type="Texture2D" uid="uid://d4b1wp3adiswj" path="res://Textures/Prototype/Dark/texture_01.png" id="1_r4d3u"]
+[ext_resource type="PackedScene" uid="uid://bcrl2qqeeiqss" path="res://player.tscn" id="2_r7vl6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l4yhn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_khuvo"]
+sky_material = SubResource("ProceduralSkyMaterial_l4yhn")
+
+[sub_resource type="Environment" id="Environment_j4r6x"]
+background_mode = 2
+sky = SubResource("Sky_khuvo")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ngs3f"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8jx7"]
+diffuse_mode = 3
+specular_mode = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_r4d3u")
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 5
 
 [node name="TestWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_j4r6x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+use_collision = true
+mesh = SubResource("PlaneMesh_ngs3f")
+material = SubResource("StandardMaterial3D_h8jx7")
+
+[node name="PlayerRigidBody" parent="." instance=ExtResource("2_r7vl6")]

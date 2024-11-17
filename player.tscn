@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcrl2qqeeiqss"]
+
+[ext_resource type="Script" path="res://Scripts/mouse_look.gd" id="1_r3oqm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_34qhb"]
+radius = 0.35
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_idguv"]
+radius = 0.35
+
+[node name="PlayerRigidBody" type="RigidBody3D"]
+axis_lock_angular_y = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_34qhb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_idguv")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+script = ExtResource("1_r3oqm")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
