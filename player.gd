@@ -3,8 +3,8 @@ extends RigidBody3D
 var bullet = load("res://bullet.tscn")
 var bullet_instance
 
-@onready var gun_anim_player = $Head/Camera3D/GunPoint/Revolver/AnimationPlayer
-@onready var gun_raycast = $Head/Camera3D/GunPoint/Revolver/RayCast3D
+@onready var gun_anim_player = $"Head/Camera3D/GunPoint/Assault Rifle/AnimationPlayer"
+@onready var gun_raycast = $"Head/Camera3D/GunPoint/Assault Rifle/RayCast3D"
 
 
 func _physics_process(delta: float) -> void:
