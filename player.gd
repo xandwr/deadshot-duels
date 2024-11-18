@@ -23,6 +23,14 @@ var move_speed = 4.0
 
 
 func _physics_process(_delta: float) -> void:
+	_handle_movement()
+	
+	if Input.is_action_pressed("shoot"):
+		if !gun_anim_player.is_playing():
+			_handle_shoot()
+
+
+func _handle_movement() -> void:
 	var direction = Vector3(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		0.0,
@@ -38,46 +46,56 @@ func _physics_process(_delta: float) -> void:
 	velocity = lerp(velocity, target_velocity, 0.08)
 	
 	move_and_slide()
+
+
+func _handle_shoot() -> void:
+	gun_anim_player.play("shoot")
+	_play_shoot_sound()
+	muzzle_particles.restart()
 	
-	if Input.is_action_pressed("shoot"):
-		if !gun_anim_player.is_playing():
-			gun_anim_player.play("shoot")
-			
-			if shot_sound_source:
-				shot_sound_source.stream = shoot_sounds.pick_random()
-				shot_sound_source.pitch_scale = randf_range(0.9, 1.05)
-				shot_sound_source.play()
-			
-			muzzle_particles.restart()
-			
-			var has_hit = gun_cast.is_colliding()
-			var collision_point = gun_cast.get_collision_point()
-			var collision_normal = gun_cast.get_collision_normal()
-			
-			if !has_hit:
-				collision_point = muzzle.global_position + (-gun_cast.global_transform.basis.z * 100)
-			
-			var tracer = Tracer.new()
-			get_tree().root.add_child(tracer)
-			tracer.init(muzzle.global_position, collision_point)
-			
-			if has_hit:		
-				var bullet_hole_instance = bullet_hole.instantiate() as Decal
-				get_tree().root.add_child(bullet_hole_instance)
-				
-				bullet_hole_instance.global_position = collision_point
-				
-				# Rotate the bullet hole instance to look towards the impact surface normal
-				if not Vector3.UP.cross((collision_point + collision_normal) - bullet_hole_instance.global_position).is_zero_approx():
-					bullet_hole_instance.look_at(collision_point + collision_normal, Vector3.UP)
-				
-				# If the normal isn't straight up or down, then rotate 90 degrees left
-				if collision_normal != Vector3.UP and collision_normal != Vector3.DOWN:
-					bullet_hole_instance.rotate_object_local(-Vector3.RIGHT, 90)
-				
-				var bullet_impact_instance = bullet_impact_particles.instantiate() as GPUParticles3D
-				add_child(bullet_impact_instance)
-				
-				bullet_impact_instance.global_position = collision_point
-				bullet_impact_instance.look_at(gun_cast.global_transform.basis.z, collision_normal)
-				bullet_impact_instance.emitting = true
+	var has_hit = gun_cast.is_colliding()
+	var collision_point = gun_cast.get_collision_point()
+	var collision_normal = gun_cast.get_collision_normal()
+	
+	if !has_hit:
+		collision_point = muzzle.global_position + (-gun_cast.global_transform.basis.z * 100)
+	
+	_spawn_bullet_tracer(collision_point)
+	
+	if has_hit:		
+		_spawn_bullet_hole(collision_point, collision_normal)
+
+
+func _spawn_bullet_hole(collision_point: Vector3, collision_normal: Vector3) -> void:
+	var bullet_hole_instance = bullet_hole.instantiate() as Decal
+	get_tree().root.add_child(bullet_hole_instance)
+	
+	bullet_hole_instance.global_position = collision_point
+	
+	# Rotate the bullet hole instance to look towards the impact surface normal
+	if not Vector3.UP.cross((collision_point + collision_normal) - bullet_hole_instance.global_position).is_zero_approx():
+		bullet_hole_instance.look_at(collision_point + collision_normal, Vector3.UP)
+	
+	# If the normal isn't straight up or down, then rotate 90 degrees left
+	if collision_normal != Vector3.UP and collision_normal != Vector3.DOWN:
+		bullet_hole_instance.rotate_object_local(-Vector3.RIGHT, 90)
+	
+	var bullet_impact_instance = bullet_impact_particles.instantiate() as GPUParticles3D
+	get_tree().root.add_child(bullet_impact_instance)
+	
+	bullet_impact_instance.global_position = collision_point
+	bullet_impact_instance.look_at(gun_cast.global_transform.basis.z, collision_normal)
+	bullet_impact_instance.emitting = true
+
+
+func _spawn_bullet_tracer(collision_point: Vector3) -> void:
+	var tracer = Tracer.new()
+	get_tree().root.add_child(tracer)
+	tracer.init(muzzle.global_position, collision_point)
+
+
+func _play_shoot_sound() -> void:
+	if shot_sound_source:
+		shot_sound_source.stream = shoot_sounds.pick_random()
+		shot_sound_source.pitch_scale = randf_range(0.9, 1.05)
+		shot_sound_source.play()
