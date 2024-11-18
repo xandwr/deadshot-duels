@@ -20,17 +20,24 @@ var shoot_sounds: Array[AudioStream] = [
 ]
 
 var move_speed = 4.0
+var jump_force = 4.0
 
 
-func _physics_process(_delta: float) -> void:
-	_handle_movement()
+func _physics_process(delta: float) -> void:
+	_handle_movement(delta)
 	
 	if Input.is_action_pressed("shoot"):
 		if !gun_anim_player.is_playing():
 			_handle_shoot()
 
 
-func _handle_movement() -> void:
+func _handle_movement(delta: float) -> void:
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_force
+	
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	
 	var direction = Vector3(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		0.0,
@@ -43,8 +50,8 @@ func _handle_movement() -> void:
 	var world_direction = (right * direction.x + forward * direction.z).normalized()
 	
 	var target_velocity = world_direction * move_speed
-	velocity = lerp(velocity, target_velocity, 0.08)
 	
+	velocity = lerp(velocity, Vector3(target_velocity.x, velocity.y, target_velocity.z), 0.08)
 	move_and_slide()
 
 
