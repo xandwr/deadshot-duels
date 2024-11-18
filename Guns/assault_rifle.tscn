@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dcuy4lbgjlusv"]
+[gd_scene load_steps=16 format=4 uid="uid://dcuy4lbgjlusv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlh4i"]
 resource_name = "Wood"
@@ -155,6 +155,28 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_q0mr4")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bb113"]
+albedo_color = Color(0.897457, 0.54318, 0, 1)
+metallic_specular = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6wb2d"]
+albedo_color = Color(0.442911, 0.442911, 0.442911, 1)
+metallic = 1.0
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0pm2r"]
+albedo_color = Color(0.775063, 0.775063, 0.775063, 1)
+metallic = 1.0
+roughness = 0.61
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wjcw1"]
+albedo_color = Color(0.58, 0.29, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ot8cv"]
+albedo_color = Color(1, 0.45, 0, 1)
+metallic = 1.0
+roughness = 0.52
+
 [sub_resource type="Animation" id="Animation_0mjrl"]
 resource_name = "shoot"
 length = 0.1
@@ -201,6 +223,11 @@ transform = Transform3D(-4.37114e-07, -10, -4.37114e-07, 0, -4.37114e-07, 10, -1
 [node name="AssaultRifle_2" type="MeshInstance3D" parent="RootNode"]
 mesh = SubResource("ArrayMesh_pxebu")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_bb113")
+surface_material_override/1 = SubResource("StandardMaterial3D_6wb2d")
+surface_material_override/2 = SubResource("StandardMaterial3D_0pm2r")
+surface_material_override/3 = SubResource("StandardMaterial3D_wjcw1")
+surface_material_override/4 = SubResource("StandardMaterial3D_ot8cv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

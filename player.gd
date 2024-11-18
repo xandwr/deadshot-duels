@@ -5,7 +5,7 @@ extends RigidBody3D
 @onready var bullet_impact_particles = preload("res://bullet_impact_particles.tscn")
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("shoot"):
 		if !gun_anim_player.is_playing():
 			gun_anim_player.play("shoot")
@@ -19,6 +19,6 @@ func _physics_process(delta: float) -> void:
 				
 				bullet_impact_instance.global_position = gun_cast.get_collision_point()
 
-				bullet_impact_instance.look_at(gun_cast.transform.basis.z, gun_cast.get_collision_normal())
+				bullet_impact_instance.look_at(gun_cast.global_transform.basis.z, gun_cast.get_collision_normal())
 				
 				bullet_impact_instance.emitting = true

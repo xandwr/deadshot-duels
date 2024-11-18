@@ -1,32 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://kg8gdgxcrmqf"]
+[gd_scene load_steps=10 format=3 uid="uid://kg8gdgxcrmqf"]
 
-[ext_resource type="Texture2D" uid="uid://d4b1wp3adiswj" path="res://Textures/Prototype/Dark/texture_01.png" id="1_r4d3u"]
+[ext_resource type="Texture2D" uid="uid://mrp8p4rn72d0" path="res://Textures/Prototype/Orange/texture_01.png" id="2_6xetm"]
+[ext_resource type="Texture2D" uid="uid://bp5px0gy0tajd" path="res://Textures/Prototype/Light/texture_07.png" id="2_im4v8"]
 [ext_resource type="PackedScene" uid="uid://bcrl2qqeeiqss" path="res://player.tscn" id="2_r7vl6"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l4yhn"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7ct5y"]
+sky_top_color = Color(0.371403, 0.496181, 0.848068, 1)
+sky_horizon_color = Color(0.652479, 0.753194, 0.938098, 1)
+ground_bottom_color = Color(1, 1, 1, 1)
+ground_horizon_color = Color(0.580709, 0.674521, 0.840392, 1)
+ground_curve = 0.00659755
+sun_angle_max = 18.0
+sun_curve = 0.0588439
 
-[sub_resource type="Sky" id="Sky_khuvo"]
-sky_material = SubResource("ProceduralSkyMaterial_l4yhn")
+[sub_resource type="Sky" id="Sky_6k1uh"]
+sky_material = SubResource("ProceduralSkyMaterial_7ct5y")
 
 [sub_resource type="Environment" id="Environment_j4r6x"]
 background_mode = 2
-sky = SubResource("Sky_khuvo")
+sky = SubResource("Sky_6k1uh")
 tonemap_mode = 2
 glow_enabled = true
+fog_mode = 1
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 1.0
+fog_depth_begin = 592.8
+fog_depth_end = 2950.4
+volumetric_fog_density = 0.0299
+volumetric_fog_emission = Color(0.273656, 0.385229, 0.648548, 1)
+volumetric_fog_emission_energy = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_4tdnn"]
 size = Vector3(50, 1, 50)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8jx7"]
-diffuse_mode = 3
-specular_mode = 1
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("1_r4d3u")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcjs1"]
+albedo_texture = ExtResource("2_im4v8")
 uv1_triplanar = true
 uv1_world_triplanar = true
-texture_filter = 5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8genb"]
+albedo_texture = ExtResource("2_6xetm")
+uv1_triplanar = true
 
 [node name="TestWorld" type="Node3D"]
 
@@ -34,17 +48,36 @@ texture_filter = 5
 environment = SubResource("Environment_j4r6x")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.859945, -0.394184, 0.324212, 0.498702, -0.7841, 0.369437, 0.108589, 0.479381, 0.870863, 0, 3.81118, 0)
+light_energy = 0.8
 shadow_enabled = true
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 mesh = SubResource("BoxMesh_4tdnn")
-material = SubResource("StandardMaterial3D_h8jx7")
+material = SubResource("StandardMaterial3D_lcjs1")
 
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGMesh3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.246521, 0)
 size = Vector3(50, 1.5, 50)
 
 [node name="PlayerRigidBody" parent="." instance=ExtResource("2_r7vl6")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 8, 1.5, -8)
+use_collision = true
+size = Vector3(15, 3, 0.5)
+material = SubResource("StandardMaterial3D_8genb")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D"]
+size = Vector3(15, 3, 0.5)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(0.526659, 0.837503, -0.145665, -0.765695, 0.392934, -0.509229, -0.369244, 0.379725, 0.848214, 4.14706, 1.5, -10.6236)
+use_collision = true
+size = Vector3(2.5, 6, 0.5)
+material = SubResource("StandardMaterial3D_8genb")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D2"]
+size = Vector3(2.5, 6, 0.5)
