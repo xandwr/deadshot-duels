@@ -77,21 +77,23 @@ func _spawn_bullet_hole(collision_point: Vector3, collision_normal: Vector3) -> 
 	var bullet_hole_instance = bullet_hole.instantiate() as Decal
 	get_tree().root.add_child(bullet_hole_instance)
 	
+	var bullet_impact_instance = bullet_impact_particles.instantiate() as GPUParticles3D
+	get_tree().root.add_child(bullet_impact_instance)
+	
 	bullet_hole_instance.global_position = collision_point
+	bullet_impact_instance.global_position = collision_point
 	
 	# Rotate the bullet hole instance to look towards the impact surface normal
 	if not Vector3.UP.cross((collision_point + collision_normal) - bullet_hole_instance.global_position).is_zero_approx():
 		bullet_hole_instance.look_at(collision_point + collision_normal, Vector3.UP)
 	
+	bullet_impact_instance.look_at((global_position - collision_point), Vector3.UP)
+	
 	# If the normal isn't straight up or down, then rotate 90 degrees left
 	if collision_normal != Vector3.UP and collision_normal != Vector3.DOWN:
 		bullet_hole_instance.rotate_object_local(-Vector3.RIGHT, 90)
+		bullet_impact_instance.rotate_object_local(-Vector3.RIGHT, 90)
 	
-	var bullet_impact_instance = bullet_impact_particles.instantiate() as GPUParticles3D
-	get_tree().root.add_child(bullet_impact_instance)
-	
-	bullet_impact_instance.global_position = collision_point
-	bullet_impact_instance.look_at(gun_cast.global_transform.basis.z, collision_normal)
 	bullet_impact_instance.emitting = true
 
 

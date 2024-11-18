@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://bullet_hole.gd" id="3_mb1pq"]
 
 [node name="BulletHole" type="Decal"]
-size = Vector3(0.03, 0.03, 0.03)
+size = Vector3(0.05, 0.05, 0.05)
 texture_albedo = ExtResource("1_ykspp")
 texture_normal = ExtResource("2_cdk1h")
 distance_fade_enabled = true

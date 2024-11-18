@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://kg8gdgxcrmqf"]
+[gd_scene load_steps=12 format=3 uid="uid://kg8gdgxcrmqf"]
 
 [ext_resource type="Texture2D" uid="uid://mrp8p4rn72d0" path="res://Textures/Prototype/Orange/texture_01.png" id="2_6xetm"]
 [ext_resource type="Texture2D" uid="uid://bp5px0gy0tajd" path="res://Textures/Prototype/Light/texture_07.png" id="2_im4v8"]
 [ext_resource type="PackedScene" uid="uid://bcrl2qqeeiqss" path="res://player.tscn" id="2_r7vl6"]
+[ext_resource type="CompressedTexture3D" uid="uid://b1ohu5iviiume" path="res://Scenes/TestWorld_SDFData.exr" id="4_ddcqs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7ct5y"]
 sky_top_color = Color(0.371403, 0.496181, 0.848068, 1)
@@ -43,6 +44,10 @@ uv1_world_triplanar = true
 albedo_texture = ExtResource("2_6xetm")
 uv1_triplanar = true
 
+[sub_resource type="PrismMesh" id="PrismMesh_48lii"]
+left_to_right = 0.0
+size = Vector3(10, 5, 5)
+
 [node name="TestWorld" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -59,10 +64,6 @@ use_collision = true
 mesh = SubResource("BoxMesh_4tdnn")
 material = SubResource("StandardMaterial3D_lcjs1")
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGMesh3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.246521, 0)
-size = Vector3(50, 1.5, 50)
-
 [node name="PlayerRigidBody" parent="." instance=ExtResource("2_r7vl6")]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
@@ -71,17 +72,11 @@ use_collision = true
 size = Vector3(15, 3, 0.5)
 material = SubResource("StandardMaterial3D_8genb")
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D"]
-size = Vector3(15, 3, 0.5)
-
 [node name="CSGBox3D3" type="CSGBox3D" parent="."]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 11, 7.5, 6)
 use_collision = true
 size = Vector3(20, 1, 20)
 material = SubResource("StandardMaterial3D_8genb")
-
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D3"]
-size = Vector3(20, 1, 20)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="."]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 17.715, 4, -0.716)
@@ -89,17 +84,11 @@ use_collision = true
 size = Vector3(20, 8, 1)
 material = SubResource("StandardMaterial3D_8genb")
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D4"]
-size = Vector3(20, 8, 1)
-
 [node name="CSGBox3D5" type="CSGBox3D" parent="."]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 17.715, 4, 12.7185)
 use_collision = true
 size = Vector3(20, 8, 1)
 material = SubResource("StandardMaterial3D_8genb")
-
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D5"]
-size = Vector3(20, 8, 1)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(0.526659, 0.837503, -0.145665, -0.765695, 0.392934, -0.509229, -0.369244, 0.379725, 0.848214, 4.14706, 1.5, -10.6236)
@@ -107,9 +96,17 @@ use_collision = true
 size = Vector3(2.5, 6, 0.5)
 material = SubResource("StandardMaterial3D_8genb")
 
-[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D2"]
-size = Vector3(2.5, 6, 0.5)
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5198, 4.79502, 6.066)
 omni_range = 20.0
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -5)
+use_collision = true
+mesh = SubResource("PrismMesh_48lii")
+
+[node name="GPUParticlesCollisionSDF3D" type="GPUParticlesCollisionSDF3D" parent="."]
+size = Vector3(50, 25, 50)
+resolution = 4
+thickness = 1.5
+texture = ExtResource("4_ddcqs")
