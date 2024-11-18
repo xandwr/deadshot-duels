@@ -1,3 +1,10 @@
+
+# TODO:
+# - Make player guns local to their viewport (to prevent clipping into walls)
+# - Weapon sway/recoil
+# - Upgrade weapon sounds
+# - Implement weapon switching/an inventory system
+
 extends CharacterBody3D
 
 @onready var gun_anim_player = $"Head/Camera3D/GunPoint/Assault Rifle/AnimationPlayer"
