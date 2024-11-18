@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var gun_anim_player = $"Head/Camera3D/GunPoint/Assault Rifle/AnimationPlayer"
 @onready var gun_cast: RayCast3D = $Head/Camera3D/GunCast
+@onready var muzzle: Node3D = $"Head/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle"
 @onready var bullet_impact_particles = preload("res://bullet_impact_particles.tscn")
 
 var move_speed = 4.0
@@ -28,15 +29,23 @@ func _physics_process(delta: float) -> void:
 		if !gun_anim_player.is_playing():
 			gun_anim_player.play("shoot")
 			
-			var hit = gun_cast.get_collider()
-			if hit:
-				print("Hit %s at position %s" % [hit.name, gun_cast.get_collision_point()])
+			var has_hit = gun_cast.is_colliding()
+			var collision_point = gun_cast.get_collision_point()
+			
+			if !has_hit:
+				collision_point = muzzle.global_position + (-gun_cast.global_transform.basis.z * 100)
+			
+			var tracer = Tracer.new()
+			get_tree().root.add_child(tracer)
+			tracer.init(muzzle.global_position, collision_point)
+			
+			if has_hit:
+				var hit = gun_cast.get_collider()
+				print("Hit %s at position %s" % [hit.name, collision_point])
 				
 				var bullet_impact_instance = bullet_impact_particles.instantiate() as GPUParticles3D
 				add_child(bullet_impact_instance)
 				
-				bullet_impact_instance.global_position = gun_cast.get_collision_point()
-
+				bullet_impact_instance.global_position = collision_point
 				bullet_impact_instance.look_at(gun_cast.global_transform.basis.z, gun_cast.get_collision_normal())
-				
 				bullet_impact_instance.emitting = true

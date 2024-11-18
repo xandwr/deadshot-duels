@@ -112,5 +112,4 @@ size = Vector3(2.5, 6, 0.5)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5198, 4.79502, 6.066)
-shadow_enabled = true
 omni_range = 20.0

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c81ac1pc5gh4r"]
+
+[ext_resource type="Script" path="res://tracer.gd" id="1_2ruqu"]
+[ext_resource type="Material" uid="uid://cqas6pw28y8f0" path="res://Materials/tracer.tres" id="1_rh1x1"]
+
+[node name="Tracer" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8, 0)
+material_override = ExtResource("1_rh1x1")
+cast_shadow = 0
+skeleton = NodePath("../..")
+script = ExtResource("1_2ruqu")
