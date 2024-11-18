@@ -43,4 +43,8 @@ use_collision = true
 mesh = SubResource("BoxMesh_4tdnn")
 material = SubResource("StandardMaterial3D_h8jx7")
 
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGMesh3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.246521, 0)
+size = Vector3(50, 1.5, 50)
+
 [node name="PlayerRigidBody" parent="." instance=ExtResource("2_r7vl6")]

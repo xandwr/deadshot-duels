@@ -29,6 +29,10 @@ script = ExtResource("1_r3oqm")
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
 
+[node name="GunCast" type="RayCast3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.266326)
+target_position = Vector3(0, 0, -100)
+
 [node name="GunPoint" type="Node3D" parent="Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.125, -0.25)
 

@@ -202,10 +202,6 @@ transform = Transform3D(-4.37114e-07, -10, -4.37114e-07, 0, -4.37114e-07, 10, -1
 mesh = SubResource("ArrayMesh_pxebu")
 skeleton = NodePath("")
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0581447, -0.385355)
-target_position = Vector3(0, 0, -1)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_wklwt")

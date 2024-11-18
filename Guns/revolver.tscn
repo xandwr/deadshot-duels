@@ -199,7 +199,3 @@ skeleton = NodePath("")
 libraries = {
 "": SubResource("AnimationLibrary_dabxq")
 }
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, -2.32831e-10, 5.14986e-20, 2.32831e-10, 1, -2.21185e-10, 0, 2.21185e-10, 1, 2.01389e-05, 0.024379, -0.111018)
-target_position = Vector3(0, 0, -1)
