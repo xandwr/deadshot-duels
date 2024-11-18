@@ -34,4 +34,5 @@ func _process(delta: float) -> void:
 		pitch = lerp(pitch, target_pitch, smoothing_factor * delta * 10.0)
 		yaw = lerp(yaw, target_yaw, smoothing_factor * delta * 10.0)
 
-		rotation_degrees = Vector3(pitch, yaw, 0)
+		rotation_degrees.x = pitch
+		get_parent().rotation_degrees.y = yaw
