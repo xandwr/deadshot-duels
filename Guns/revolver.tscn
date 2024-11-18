@@ -1,4 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://by14jxx0srp2u"]
+[gd_scene load_steps=13 format=4 uid="uid://by14jxx0srp2u"]
+
+[ext_resource type="Material" uid="uid://b3etmy42btdip" path="res://Materials/debug_gray.tres" id="1_8j4f6"]
+[ext_resource type="Material" uid="uid://rbyddj3b6ymv" path="res://Materials/debug_orange_light.tres" id="2_bqpnw"]
+[ext_resource type="Material" uid="uid://dc3bb5ucor4nj" path="res://Materials/debug_orange.tres" id="3_q80fq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yhexg"]
 resource_name = "DarkWood"
@@ -194,6 +198,10 @@ transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 
 [node name="Revolver_3" type="MeshInstance3D" parent="RootNode"]
 mesh = SubResource("ArrayMesh_clasa")
 skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_8j4f6")
+surface_material_override/1 = ExtResource("1_8j4f6")
+surface_material_override/2 = ExtResource("2_bqpnw")
+surface_material_override/3 = ExtResource("3_q80fq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

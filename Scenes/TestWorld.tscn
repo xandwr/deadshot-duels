@@ -19,6 +19,7 @@ sky_material = SubResource("ProceduralSkyMaterial_7ct5y")
 [sub_resource type="Environment" id="Environment_j4r6x"]
 background_mode = 2
 sky = SubResource("Sky_6k1uh")
+ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
 glow_enabled = true
 fog_mode = 1
@@ -73,6 +74,33 @@ material = SubResource("StandardMaterial3D_8genb")
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D"]
 size = Vector3(15, 3, 0.5)
 
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 11, 7.5, 6)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_8genb")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D3"]
+size = Vector3(20, 1, 20)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 17.715, 4, -0.716)
+use_collision = true
+size = Vector3(20, 8, 1)
+material = SubResource("StandardMaterial3D_8genb")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D4"]
+size = Vector3(20, 8, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 17.715, 4, 12.7185)
+use_collision = true
+size = Vector3(20, 8, 1)
+material = SubResource("StandardMaterial3D_8genb")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D5"]
+size = Vector3(20, 8, 1)
+
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(0.526659, 0.837503, -0.145665, -0.765695, 0.392934, -0.509229, -0.369244, 0.379725, 0.848214, 4.14706, 1.5, -10.6236)
 use_collision = true
@@ -81,3 +109,8 @@ material = SubResource("StandardMaterial3D_8genb")
 
 [node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="CSGBox3D2"]
 size = Vector3(2.5, 6, 0.5)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5198, 4.79502, 6.066)
+shadow_enabled = true
+omni_range = 20.0
