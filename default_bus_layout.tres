@@ -1,0 +1,35 @@
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://dbt30omdpt8l8"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_ln8np"]
+resource_name = "Reverb"
+room_size = 0.2
+damping = 0.2
+wet = 0.6
+
+[sub_resource type="AudioEffectEQ6" id="AudioEffectEQ6_lqebi"]
+resource_name = "EQ6"
+band_db/32_hz = 3.3
+band_db/100_hz = -3.0
+band_db/320_hz = -12.0
+band_db/1000_hz = -12.0
+band_db/3200_hz = -8.0
+band_db/10000_hz = -1.0
+
+[resource]
+bus/0/volume_db = -16.4004
+bus/1/name = &"Reverb"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectReverb_ln8np")
+bus/1/effect/0/enabled = true
+bus/2/name = &"Shots"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectEQ6_lqebi")
+bus/2/effect/0/enabled = true

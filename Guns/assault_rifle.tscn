@@ -249,3 +249,10 @@ mesh = SubResource("BoxMesh_s78wp")
 libraries = {
 "": SubResource("AnimationLibrary_wklwt")
 }
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.155365, -9.43101e-09, 0.0603909)
+max_polyphony = 8
+bus = &"Shots"
+emission_angle_enabled = true
+attenuation_filter_cutoff_hz = 20500.0

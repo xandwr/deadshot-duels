@@ -4,6 +4,11 @@ extends CharacterBody3D
 @onready var gun_cast: RayCast3D = $Head/Camera3D/GunCast
 @onready var muzzle: Node3D = $"Head/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle"
 @onready var bullet_impact_particles = preload("res://bullet_impact_particles.tscn")
+@onready var shot_sound_source: AudioStreamPlayer3D = $"Head/Camera3D/GunPoint/Assault Rifle/AudioStreamPlayer3D"
+
+var shoot_sounds: Array[AudioStream] = [
+	load("res://Sounds/rifle_shot_1.mp3")
+]
 
 var move_speed = 4.0
 
@@ -28,6 +33,11 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("shoot"):
 		if !gun_anim_player.is_playing():
 			gun_anim_player.play("shoot")
+			
+			if shot_sound_source:
+				shot_sound_source.stream = shoot_sounds.pick_random()
+				shot_sound_source.pitch_scale = randf_range(0.9, 1.05)
+				shot_sound_source.play()
 			
 			var has_hit = gun_cast.is_colliding()
 			var collision_point = gun_cast.get_collision_point()
