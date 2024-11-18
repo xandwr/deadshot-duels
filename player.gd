@@ -3,6 +3,7 @@ extends CharacterBody3D
 @onready var gun_anim_player = $"Head/Camera3D/GunPoint/Assault Rifle/AnimationPlayer"
 @onready var gun_cast: RayCast3D = $Head/Camera3D/GunCast
 @onready var muzzle: Node3D = $"Head/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle"
+@onready var muzzle_particles: GPUParticles3D = $"Head/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle/GPUParticles3D"
 @onready var bullet_impact_particles = preload("res://bullet_impact_particles.tscn")
 @onready var shot_sound_source: AudioStreamPlayer3D = $"Head/Camera3D/GunPoint/Assault Rifle/AudioStreamPlayer3D"
 
@@ -38,6 +39,8 @@ func _physics_process(delta: float) -> void:
 				shot_sound_source.stream = shoot_sounds.pick_random()
 				shot_sound_source.pitch_scale = randf_range(0.9, 1.05)
 				shot_sound_source.play()
+			
+			muzzle_particles.restart()
 			
 			var has_hit = gun_cast.is_colliding()
 			var collision_point = gun_cast.get_collision_point()
