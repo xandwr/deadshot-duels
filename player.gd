@@ -28,6 +28,13 @@ var move_speed = 4.0
 var jump_force = 4.0
 
 
+func _ready() -> void:
+	# Some projection hackery to adjust the offset of the muzzle to match the FOV of the subviewport camera
+	var muzzle_screenspace = subviewport_camera.unproject_position(muzzle.global_transform.origin)
+	var muzzle_world_adjusted = main_camera.project_position(muzzle_screenspace, 0.5)
+	muzzle.global_transform.origin = muzzle_world_adjusted
+
+
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
 	
@@ -107,22 +114,7 @@ func _spawn_bullet_hole(collision_point: Vector3, collision_normal: Vector3) -> 
 func _spawn_bullet_tracer(collision_point: Vector3) -> void:
 	var tracer = Tracer.new()
 	get_tree().root.add_child(tracer)
-	
-	var test = main_camera.unproject_position(muzzle.global_transform.origin)
-	var muzzle_screenspace = subviewport_camera.unproject_position(muzzle.global_transform.origin)
-	var test_1 = load("res://test_indicator.tscn").instantiate() as Node2D
-	var test_2 = load("res://test_indicator.tscn").instantiate() as Node2D
-	add_child(test_1)
-	add_child(test_2)
-	test_1.position = muzzle_screenspace
-	test_1.modulate = Color(0, 0, 255)
-	test_1.label.text = "Muzzle Screenspace"
-	test_2.position = test
-	test_2.modulate = Color(255, 0, 0)
-	test_2.label.text = "Muzzle Worldspace"
-	
-	var muzzle_world_adjusted = subviewport_camera.project_position(muzzle_screenspace, 1.0)
-	tracer.init(muzzle_world_adjusted, collision_point)
+	tracer.init(muzzle.global_position, collision_point)
 
 
 func _play_shoot_sound() -> void:
