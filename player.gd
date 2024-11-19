@@ -91,7 +91,9 @@ func _spawn_bullet_hole(collision_point: Vector3, collision_normal: Vector3) -> 
 	if not Vector3.UP.cross((collision_point + collision_normal) - bullet_hole_instance.global_position).is_zero_approx():
 		bullet_hole_instance.look_at(collision_point + collision_normal, Vector3.UP)
 	
-	bullet_impact_instance.look_at((global_position - collision_point), Vector3.UP)
+	# Rotate the bullet impact particles to face away from the shot origin
+	var shot_direction = (muzzle.global_transform.origin - collision_point).normalized()
+	bullet_impact_instance.look_at(collision_point + shot_direction, Vector3.UP)
 	
 	# If the normal isn't straight up or down, then rotate 90 degrees left
 	if collision_normal != Vector3.UP and collision_normal != Vector3.DOWN:
