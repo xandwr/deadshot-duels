@@ -1,9 +1,11 @@
 
 # TODO:
-# - Make player guns local to their viewport (to prevent clipping into walls)
-# - Weapon sway/recoil
-# - Upgrade weapon sounds
+# - Add weapon sway/recoil
 # - Implement weapon switching/an inventory system
+# - Fix muzzle flash + tracer offset issue with varying camera FOV in the subviewport
+# - Pause menu / UI
+# - Add weapon properties (fire rate, reload time, ammo, etc.)
+# - Upgrade movement (just crouching and sliding for now)
 
 extends CharacterBody3D
 
