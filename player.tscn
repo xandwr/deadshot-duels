@@ -82,12 +82,10 @@ script = ExtResource("5_xr5ks")
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 cull_mask = 2147483646
-fov = 80.0
+fov = 60.0
 script = ExtResource("6_8uv5t")
 
 [node name="GunPoint" type="Node3D" parent="SubViewportContainer/SubViewport/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.175, -0.125, -0.2)
 
 [node name="Assault Rifle" parent="SubViewportContainer/SubViewport/Camera3D/GunPoint" instance=ExtResource("3_qdcdx")]
-
-[editable path="SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle"]

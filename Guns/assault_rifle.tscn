@@ -195,9 +195,9 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 layers = 2
 mesh = SubResource("ArrayMesh_pxebu")
 skeleton = NodePath("")
-surface_material_override/0 = ExtResource("1_tfdsi")
+surface_material_override/0 = ExtResource("2_mt03c")
 surface_material_override/1 = ExtResource("2_qw8k1")
-surface_material_override/2 = ExtResource("2_qw8k1")
+surface_material_override/2 = ExtResource("1_tfdsi")
 surface_material_override/3 = ExtResource("2_mt03c")
 surface_material_override/4 = ExtResource("1_tfdsi")
 

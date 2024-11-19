@@ -17,6 +17,7 @@ extends CharacterBody3D
 @onready var bullet_impact_particles = preload("res://bullet_impact_particles.tscn")
 @onready var bullet_hole = preload("res://bullet_hole.tscn")
 @onready var shot_sound_source: AudioStreamPlayer3D = $"SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle/AudioStreamPlayer3D"
+@onready var subviewport: SubViewport = $SubViewportContainer/SubViewport
 @onready var subviewport_camera: Camera3D = $SubViewportContainer/SubViewport/Camera3D
 
 var shoot_sounds: Array[AudioStream] = [
@@ -107,8 +108,21 @@ func _spawn_bullet_tracer(collision_point: Vector3) -> void:
 	var tracer = Tracer.new()
 	get_tree().root.add_child(tracer)
 	
-	var muzzle_world = muzzle.global_transform.origin
-	tracer.init(muzzle_world, collision_point)
+	var test = main_camera.unproject_position(muzzle.global_transform.origin)
+	var muzzle_screenspace = subviewport_camera.unproject_position(muzzle.global_transform.origin)
+	var test_1 = load("res://test_indicator.tscn").instantiate() as Node2D
+	var test_2 = load("res://test_indicator.tscn").instantiate() as Node2D
+	add_child(test_1)
+	add_child(test_2)
+	test_1.position = muzzle_screenspace
+	test_1.modulate = Color(0, 0, 255)
+	test_1.label.text = "Muzzle Screenspace"
+	test_2.position = test
+	test_2.modulate = Color(255, 0, 0)
+	test_2.label.text = "Muzzle Worldspace"
+	
+	var muzzle_world_adjusted = subviewport_camera.project_position(muzzle_screenspace, 1.0)
+	tracer.init(muzzle_world_adjusted, collision_point)
 
 
 func _play_shoot_sound() -> void:
