@@ -67,6 +67,11 @@ jump={
 ]
 }
 
+[layer_names]
+
+3d_render/layer_1="Default"
+3d_render/layer_2="Screenspace View"
+
 [physics]
 
 3d/run_on_separate_thread=true

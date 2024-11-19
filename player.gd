@@ -7,13 +7,15 @@
 
 extends CharacterBody3D
 
-@onready var gun_anim_player = $"Head/Camera3D/GunPoint/Assault Rifle/AnimationPlayer"
+@onready var main_camera: Camera3D = $Head/Camera3D
+@onready var gun_anim_player = $"SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle/AnimationPlayer"
 @onready var gun_cast: RayCast3D = $Head/Camera3D/GunCast
-@onready var muzzle: Node3D = $"Head/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle"
-@onready var muzzle_particles: GPUParticles3D = $"Head/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle/GPUParticles3D"
+@onready var muzzle: Node3D = $"SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle"
+@onready var muzzle_particles: GPUParticles3D = $"SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle/RootNode/AssaultRifle_2/Muzzle/GPUParticles3D"
 @onready var bullet_impact_particles = preload("res://bullet_impact_particles.tscn")
 @onready var bullet_hole = preload("res://bullet_hole.tscn")
-@onready var shot_sound_source: AudioStreamPlayer3D = $"Head/Camera3D/GunPoint/Assault Rifle/AudioStreamPlayer3D"
+@onready var shot_sound_source: AudioStreamPlayer3D = $"SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle/AudioStreamPlayer3D"
+@onready var subviewport_camera: Camera3D = $SubViewportContainer/SubViewport/Camera3D
 
 var shoot_sounds: Array[AudioStream] = [
 	load("res://Sounds/rifle_shot_1.mp3")
@@ -100,7 +102,9 @@ func _spawn_bullet_hole(collision_point: Vector3, collision_normal: Vector3) -> 
 func _spawn_bullet_tracer(collision_point: Vector3) -> void:
 	var tracer = Tracer.new()
 	get_tree().root.add_child(tracer)
-	tracer.init(muzzle.global_position, collision_point)
+	
+	var muzzle_world = muzzle.global_transform.origin
+	tracer.init(muzzle_world, collision_point)
 
 
 func _play_shoot_sound() -> void:

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://bullet_impact_particles.gd" id="1_seqkt"]
 
 [sub_resource type="Gradient" id="Gradient_mt21i"]
-offsets = PackedFloat32Array(0, 0.280952)
+offsets = PackedFloat32Array(0, 0.552381)
 colors = PackedColorArray(1, 1, 1, 1, 0.0383972, 0.0383972, 0.0383972, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_j2fk0"]

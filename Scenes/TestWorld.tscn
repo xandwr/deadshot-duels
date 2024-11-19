@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://kg8gdgxcrmqf"]
+[gd_scene load_steps=15 format=3 uid="uid://kg8gdgxcrmqf"]
 
 [ext_resource type="Texture2D" uid="uid://mrp8p4rn72d0" path="res://Textures/Prototype/Orange/texture_01.png" id="2_6xetm"]
 [ext_resource type="Texture2D" uid="uid://bp5px0gy0tajd" path="res://Textures/Prototype/Light/texture_07.png" id="2_im4v8"]
 [ext_resource type="PackedScene" uid="uid://bcrl2qqeeiqss" path="res://player.tscn" id="2_r7vl6"]
+[ext_resource type="Texture2D" uid="uid://bo1ayubsdylct" path="res://Textures/Prototype/Orange/texture_04.png" id="4_4yhd4"]
 [ext_resource type="CompressedTexture3D" uid="uid://b1ohu5iviiume" path="res://Scenes/TestWorld_SDFData.exr" id="4_ddcqs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7ct5y"]
@@ -47,6 +48,14 @@ uv1_triplanar = true
 [sub_resource type="PrismMesh" id="PrismMesh_48lii"]
 left_to_right = 0.0
 size = Vector3(10, 5, 5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xc37w"]
+albedo_texture = ExtResource("4_4yhd4")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3w6w2"]
+albedo_texture = ExtResource("2_6xetm")
+uv1_triplanar = true
 
 [node name="TestWorld" type="Node3D"]
 
@@ -98,15 +107,23 @@ material = SubResource("StandardMaterial3D_8genb")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5198, 4.79502, 6.066)
+shadow_enabled = true
 omni_range = 20.0
 
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -5)
 use_collision = true
 mesh = SubResource("PrismMesh_48lii")
+material = SubResource("StandardMaterial3D_xc37w")
 
 [node name="GPUParticlesCollisionSDF3D" type="GPUParticlesCollisionSDF3D" parent="."]
 size = Vector3(50, 25, 50)
 resolution = 4
 thickness = 1.5
 texture = ExtResource("4_ddcqs")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.5, 2.5)
+use_collision = true
+size = Vector3(8, 5, 20)
+material = SubResource("StandardMaterial3D_3w6w2")
