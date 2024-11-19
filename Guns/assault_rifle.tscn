@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=4 uid="uid://dcuy4lbgjlusv"]
+[gd_scene load_steps=19 format=4 uid="uid://dcuy4lbgjlusv"]
 
 [ext_resource type="Material" uid="uid://rbyddj3b6ymv" path="res://Materials/weapon_orange_light.tres" id="1_tfdsi"]
 [ext_resource type="Material" uid="uid://dc3bb5ucor4nj" path="res://Materials/weapon_orange.tres" id="2_mt03c"]
 [ext_resource type="Material" uid="uid://b3etmy42btdip" path="res://Materials/weapon_gray.tres" id="2_qw8k1"]
+[ext_resource type="Script" path="res://Guns/gun_physical.gd" id="4_5fb85"]
 [ext_resource type="Material" uid="uid://cqas6pw28y8f0" path="res://Materials/tracer.tres" id="4_vyt4f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlh4i"]
@@ -200,6 +201,7 @@ surface_material_override/1 = ExtResource("2_qw8k1")
 surface_material_override/2 = ExtResource("1_tfdsi")
 surface_material_override/3 = ExtResource("2_mt03c")
 surface_material_override/4 = ExtResource("1_tfdsi")
+script = ExtResource("4_5fb85")
 
 [node name="Muzzle" type="Node3D" parent="RootNode/AssaultRifle_2"]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.0382046, -1.91948e-09, 0.00570787)
