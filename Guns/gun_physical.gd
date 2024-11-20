@@ -7,20 +7,20 @@ extends Node3D
 
 var sway_min = Vector2(-50, -50)
 var sway_max = Vector2(50, 50)
-var sway_speed_position = 0.04
+var sway_speed_position = 0.03
 var sway_speed_rotation = 0.03
 var sway_amount_position = 0.05
-var sway_amount_rotation = 25.0
+var sway_amount_rotation = 30.0
 
 var idle_sway_adjustment = 10.0
-var idle_sway_rotation_strength = 300.0
+var idle_sway_rotation_strength = 500.0
 var random_sway_amount = 5.0
 var sway_noise = NoiseTexture2D.new()
-var sway_speed = 1.4
+var sway_speed = 0.5
 var random_sway = Vector2()
 var sway_time = 0.0
 
-var bob_speed = 7.0
+var bob_speed = 1
 var hbob_amount = 1
 var vbob_amount = 1
 var weapon_bob_amount = Vector2()
@@ -47,9 +47,16 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	mouse_movement = Vector2.ZERO # Reset the mouse movement each frame to prevent tab-out issues
+	bob_speed = player.current_move_speed * 1.8
+	hbob_amount = player.current_move_speed * 0.25
+	vbob_amount = player.current_move_speed * 0.25
 
 
 func _physics_process(delta: float) -> void:
+	handle_weapon_sway(delta)
+
+
+func handle_weapon_sway(delta: float) -> void:
 	# Rough implementation of weapon sway
 	# These values actually feel pretty nice, might just keep them long-term
 	var sway_random_noise = get_sway_noise()

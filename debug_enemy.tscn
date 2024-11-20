@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://dy4jad7o0dlux"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_53y6h"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2rut3"]
+friction = 0.99
+rough = true
+absorbent = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mdsqc"]
+radius = 0.2
+height = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8i7d"]
+albedo_color = Color(0.56, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yp4t5"]
+material = SubResource("StandardMaterial3D_n8i7d")
+radius = 0.2
+height = 1.6
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mrsdf"]
+friction = 0.99
+rough = true
+bounce = 0.1
+absorbent = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tsaxh"]
+radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwmc4"]
+albedo_color = Color(0.975748, 0, 0.010701, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_eorc5"]
+material = SubResource("StandardMaterial3D_lwmc4")
+radius = 0.2
+height = 0.4
+
+[node name="DebugEnemy" type="Node3D" groups=["Enemy"]]
+script = ExtResource("1_53y6h")
+
+[node name="Body" type="RigidBody3D" parent="." groups=["Enemy", "EnemyBody"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mass = 70.0
+physics_material_override = SubResource("PhysicsMaterial_2rut3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("CapsuleShape3D_mdsqc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+mesh = SubResource("CapsuleMesh_yp4t5")
+
+[node name="Head" type="RigidBody3D" parent="." groups=["Enemy", "EnemyHead"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+mass = 8.0
+physics_material_override = SubResource("PhysicsMaterial_mrsdf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head"]
+shape = SubResource("SphereShape3D_tsaxh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("SphereMesh_eorc5")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+billboard = 1
+text = "Health: 0/0"
+
+[node name="ConeTwistJoint3D" type="ConeTwistJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+node_a = NodePath("../Body")
+node_b = NodePath("../Head")
+exclude_nodes_from_collision = false

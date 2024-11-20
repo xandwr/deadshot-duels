@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bcrl2qqeeiqss"]
+[gd_scene load_steps=11 format=3 uid="uid://bcrl2qqeeiqss"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_pq3n1"]
 [ext_resource type="Script" path="res://Scripts/mouse_look.gd" id="1_r3oqm"]
 [ext_resource type="PackedScene" uid="uid://g5dvo5xyv7i1" path="res://Player Arms/player_arms.tscn" id="2_1ikkd"]
+[ext_resource type="AudioStream" uid="uid://bfrpwnkfua18l" path="res://Sounds/hitmarker_2.mp3" id="3_idof5"]
 [ext_resource type="PackedScene" uid="uid://dcuy4lbgjlusv" path="res://Guns/assault_rifle.tscn" id="3_qdcdx"]
+[ext_resource type="AudioStream" uid="uid://kqq774pmqd2u" path="res://Sounds/bhit_helmet-1.mp3" id="4_wkkcg"]
 [ext_resource type="Script" path="res://screenspace_viewport.gd" id="5_xr5ks"]
 [ext_resource type="Script" path="res://screenspace_camera.gd" id="6_8uv5t"]
 
@@ -62,6 +64,18 @@ layout_mode = 2
 text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Head/Camera3D"]
+stream = ExtResource("3_idof5")
+volume_db = -3.0
+max_polyphony = 4
+panning_strength = 0.0
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="Head/Camera3D"]
+stream = ExtResource("4_wkkcg")
+volume_db = -6.0
+max_polyphony = 4
+panning_strength = 0.0
 
 [node name="PlayerArms" parent="Head" instance=ExtResource("2_1ikkd")]
 transform = Transform3D(-1, -3.01798e-05, 2.19466e-05, -3.01799e-05, 1, 5.89708e-05, -2.19466e-05, 5.89708e-05, -1, 0, 0, 0)

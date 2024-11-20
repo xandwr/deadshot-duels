@@ -19,6 +19,8 @@ extends CharacterBody3D
 @onready var shot_sound_source: AudioStreamPlayer3D = $"SubViewportContainer/SubViewport/Camera3D/GunPoint/Assault Rifle/AudioStreamPlayer3D"
 @onready var subviewport: SubViewport = $SubViewportContainer/SubViewport
 @onready var subviewport_camera: Camera3D = $SubViewportContainer/SubViewport/Camera3D
+@onready var hitmarker_audio_player: AudioStreamPlayer2D = $Head/Camera3D/AudioStreamPlayer2D
+@onready var headshot_audio_player: AudioStreamPlayer2D = $Head/Camera3D/AudioStreamPlayer2D2
 
 var is_moving_on_ground: bool = false
 var input_direction: Vector2 = Vector2.ZERO
@@ -27,8 +29,13 @@ var shoot_sounds: Array[AudioStream] = [
 	load("res://Sounds/rifle_shot_1.mp3")
 ]
 
-var move_speed = 4.0
+var walk_speed = 4.0
+var sprint_speed = 6.5
+var current_move_speed = 0.0
 var jump_force = 4.0
+
+var original_fov
+var camera_fov_speed = 0.025
 
 
 func _ready() -> void:
@@ -36,6 +43,15 @@ func _ready() -> void:
 	var muzzle_screenspace = subviewport_camera.unproject_position(muzzle.global_transform.origin)
 	var muzzle_world_adjusted = main_camera.project_position(muzzle_screenspace, 0.5)
 	muzzle.global_transform.origin = muzzle_world_adjusted
+	
+	original_fov = main_camera.fov
+
+
+func _process(delta: float) -> void:
+	if current_move_speed == sprint_speed:
+		main_camera.fov = lerp(main_camera.fov, original_fov + 10, camera_fov_speed)
+	else:
+		main_camera.fov = lerp(main_camera.fov, original_fov, camera_fov_speed)
 
 
 func _physics_process(delta: float) -> void:
@@ -64,8 +80,14 @@ func _handle_movement(delta: float) -> void:
 	var right = global_transform.basis.x
 	
 	var world_direction = (right * input_direction.x + forward * input_direction.y).normalized()
+	var target_velocity
 	
-	var target_velocity = world_direction * move_speed
+	if Input.is_action_pressed("sprint"):
+		target_velocity = world_direction * sprint_speed
+		current_move_speed = sprint_speed
+	else:
+		target_velocity = world_direction * walk_speed
+		current_move_speed = walk_speed
 	
 	velocity = lerp(velocity, Vector3(target_velocity.x, velocity.y, target_velocity.z), 0.08)
 	move_and_slide()
@@ -76,6 +98,7 @@ func _handle_shoot() -> void:
 	_play_shoot_sound()
 	muzzle_particles.restart()
 	
+	var hit_instance = gun_cast.get_collider()
 	var has_hit = gun_cast.is_colliding()
 	var collision_point = gun_cast.get_collision_point()
 	var collision_normal = gun_cast.get_collision_normal()
@@ -87,6 +110,14 @@ func _handle_shoot() -> void:
 	
 	if has_hit:		
 		_spawn_bullet_hole(collision_point, collision_normal)
+		if hit_instance.is_in_group("EnemyHead"):
+			if hit_instance.get_parent().is_alive:
+				headshot_audio_player.play()
+			hit_instance.get_parent().damage(60.0, hit_instance.get_parent().global_transform.origin - global_transform.origin)
+		elif hit_instance.is_in_group("EnemyBody"):
+			if hit_instance.get_parent().is_alive:
+				hitmarker_audio_player.play()
+			hit_instance.get_parent().damage(35.0, hit_instance.get_parent().global_transform.origin - global_transform.origin)
 
 
 func _spawn_bullet_hole(collision_point: Vector3, collision_normal: Vector3) -> void:

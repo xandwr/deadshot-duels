@@ -1,7 +1,8 @@
 extends Node3D
 
-@export var mouse_sensitivity = 0.08
-@export var smoothing_factor = 2.8
+@export var mouse_sensitivity: float = 0.08
+@export var mouse_smoothing_enabled: bool = false
+@export var smoothing_factor: float = 2.8
 
 var pitch = 0.0
 var yaw = 0.0
@@ -31,8 +32,12 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	if can_look:
-		pitch = lerp(pitch, target_pitch, smoothing_factor * delta * 10.0)
-		yaw = lerp(yaw, target_yaw, smoothing_factor * delta * 10.0)
+		if mouse_smoothing_enabled:
+			pitch = lerp(pitch, target_pitch, smoothing_factor * delta * 10.0)
+			yaw = lerp(yaw, target_yaw, smoothing_factor * delta * 10.0)
+		else:
+			pitch = target_pitch
+			yaw = target_yaw
 
 		rotation_degrees.x = pitch
 		get_parent().rotation_degrees.y = yaw

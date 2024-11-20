@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://kg8gdgxcrmqf"]
+[gd_scene load_steps=16 format=3 uid="uid://kg8gdgxcrmqf"]
 
 [ext_resource type="Texture2D" uid="uid://mrp8p4rn72d0" path="res://Textures/Prototype/Orange/texture_01.png" id="2_6xetm"]
 [ext_resource type="Texture2D" uid="uid://bp5px0gy0tajd" path="res://Textures/Prototype/Light/texture_07.png" id="2_im4v8"]
 [ext_resource type="PackedScene" uid="uid://bcrl2qqeeiqss" path="res://player.tscn" id="2_r7vl6"]
 [ext_resource type="Texture2D" uid="uid://bo1ayubsdylct" path="res://Textures/Prototype/Orange/texture_04.png" id="4_4yhd4"]
 [ext_resource type="CompressedTexture3D" uid="uid://b1ohu5iviiume" path="res://Scenes/TestWorld_SDFData.exr" id="4_ddcqs"]
+[ext_resource type="PackedScene" uid="uid://dy4jad7o0dlux" path="res://debug_enemy.tscn" id="6_mkbs7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7ct5y"]
 sky_top_color = Color(0.371403, 0.496181, 0.848068, 1)
@@ -127,3 +128,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 2.5, 2.5)
 use_collision = true
 size = Vector3(8, 5, 20)
 material = SubResource("StandardMaterial3D_3w6w2")
+
+[node name="DebugEnemy" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6199, 0, 0.360353)
+
+[node name="DebugEnemy2" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6852, -4.76837e-07, 3.97654)
+
+[node name="DebugEnemy3" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4223, 0, 7.99861)
+
+[node name="DebugEnemy4" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.84346, -4.76837e-07, 6.61363)
+
+[node name="DebugEnemy5" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4714, 0, 10.6284)
+
+[node name="DebugEnemy6" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9973, -4.76837e-07, 15.984)
+
+[node name="DebugEnemy7" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.48008, 0, 11.4703)
+
+[node name="DebugEnemy8" parent="." instance=ExtResource("6_mkbs7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.81856, -4.76837e-07, 16.1401)
