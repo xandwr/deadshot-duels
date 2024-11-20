@@ -20,6 +20,9 @@ extends CharacterBody3D
 @onready var subviewport: SubViewport = $SubViewportContainer/SubViewport
 @onready var subviewport_camera: Camera3D = $SubViewportContainer/SubViewport/Camera3D
 
+var is_moving_on_ground: bool = false
+var input_direction: Vector2 = Vector2.ZERO
+
 var shoot_sounds: Array[AudioStream] = [
 	load("res://Sounds/rifle_shot_1.mp3")
 ]
@@ -36,6 +39,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	is_moving_on_ground = (input_direction != Vector2.ZERO) and is_on_floor()
+	
 	_handle_movement(delta)
 	
 	if Input.is_action_pressed("shoot"):
@@ -50,16 +55,15 @@ func _handle_movement(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	var direction = Vector3(
+	input_direction = Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-		0.0,
 		Input.get_action_strength("move_forward") - Input.get_action_strength("move_backward")
 	).normalized()
 	
 	var forward = -global_transform.basis.z
 	var right = global_transform.basis.x
 	
-	var world_direction = (right * direction.x + forward * direction.z).normalized()
+	var world_direction = (right * input_direction.x + forward * input_direction.y).normalized()
 	
 	var target_velocity = world_direction * move_speed
 	
