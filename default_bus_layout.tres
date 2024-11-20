@@ -16,7 +16,7 @@ band_db/3200_hz = -8.0
 band_db/10000_hz = -1.0
 
 [resource]
-bus/0/volume_db = -16.4004
+bus/0/volume_db = -11.952
 bus/1/name = &"Reverb"
 bus/1/solo = false
 bus/1/mute = false
