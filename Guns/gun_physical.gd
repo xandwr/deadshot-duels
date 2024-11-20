@@ -26,6 +26,8 @@ var vbob_amount = 1
 var weapon_bob_amount = Vector2()
 var bob_time = 0.0
 
+var fall_rotation_amount: float = 0.0
+
 var weapon_position
 var weapon_rotation
 
@@ -61,6 +63,8 @@ func _physics_process(delta: float) -> void:
 	weapon_bob_amount.x = sin(bob_time * bob_speed) * hbob_amount
 	weapon_bob_amount.y = abs(cos(bob_time * bob_speed) * vbob_amount)
 	
+	fall_rotation_amount = clampf(rad_to_deg(player.velocity.y) * 4, -4000, 4000)
+	
 	mouse_movement = mouse_movement.clamp(sway_min, sway_max)
 	
 	# NOTE:
@@ -76,7 +80,7 @@ func _physics_process(delta: float) -> void:
 		position.z = lerp(position.z, weapon_position.y + (mouse_movement.y * sway_amount_position + random_sway.y) * delta, sway_speed_position)
 	
 	rotation_degrees.x = lerp(rotation_degrees.x, weapon_rotation.y - (mouse_movement.x * sway_amount_rotation + (random_sway.y * idle_sway_rotation_strength)) * delta, sway_speed_rotation)
-	rotation_degrees.y = lerp(rotation_degrees.y, weapon_rotation.x - (mouse_movement.y * sway_amount_rotation + (random_sway.x * idle_sway_rotation_strength)) * delta, sway_speed_rotation)
+	rotation_degrees.y = lerp(rotation_degrees.y, weapon_rotation.x - (mouse_movement.y * sway_amount_rotation + (random_sway.x * idle_sway_rotation_strength) - fall_rotation_amount) * delta, sway_speed_rotation)
 
 
 func get_sway_noise() -> float:
